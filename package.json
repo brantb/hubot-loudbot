@@ -5,7 +5,9 @@
   "author": "Brant Bobby <brant@control-v.net>",
   "license": "MIT",
   "keywords": [
-    "hubot hubot-scripts loudbot"
+    "hubot",
+	"hubot-scripts",
+	"loudbot"
   ],
   "repository": {
     "type": "git",
