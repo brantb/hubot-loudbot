@@ -1,0 +1,38 @@
+{
+  "name": "hubot-loudbot",
+  "description": "A LOUDBOT SCRIPT FOR HUBOT",
+  "version": "1.0.0",
+  "author": "Brant Bobby <brant@control-v.net>",
+  "license": "MIT",
+  "keywords": [
+    "hubot hubot-scripts loudbot"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/brantb/hubot-loudbot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/brantb/hubot-loudbot/issues"
+  },
+  "dependencies": {
+    "coffee-script": "~1.6"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*",
+    "sinon-chai": "*",
+    "sinon": "*",
+    "grunt-mocha-test": "~0.7.0",
+    "grunt-release": "~0.6.0",
+    "matchdep": "~0.1.2",
+    "grunt-contrib-watch": "~0.5.3"
+  },
+  "main": "index.coffee",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "homepage": "https://github.com/brantb/hubot-loudbot",
+  "directories": {
+    "test": "test"
+  }
+}
