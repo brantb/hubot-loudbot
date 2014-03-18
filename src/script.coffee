@@ -1,14 +1,14 @@
 # Description
 #   A LOUDBOT SCRIPT FOR HUBOT
 #
+# Dependencies:
+#   NONE
+#
 # Configuration:
 #   NONE
 #
-# Notes:
-#   <optional notes required for the script>
-#
 # Author:
-#   Brant Bobby[@<org>]
+#   brantb
 
 Loudbot = require ('./loudbot')
 
