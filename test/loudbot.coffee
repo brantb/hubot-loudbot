@@ -3,24 +3,29 @@ sinon = require 'sinon'
 chai.use require 'sinon-chai'
 
 expect = chai.expect
+Loudbot = require('../src/loudbot')
 
 describe 'Loudbot', ->
   beforeEach ->
     @brain = 
       get: sinon.spy()
       set: sinon.spy()
-    Loudbot = require('../src/loudbot')
     @sut = new Loudbot(@brain)
 
   describe 'remember', ->
     beforeEach ->
-      @sut.remember 'LOUD'
+      @sut.remember 'LOUD TEXT'
 
     it 'adds to array', ->
-      expect(@sut.louds.indexOf('LOUD')).to.be.positive
+      expect('LOUD TEXT' in @sut.louds).to.be.true
 
     it 'saves in brain', ->
       expect(@brain.set).to.have.been.calledWith('LOUDS', @sut.louds)
+
+    it 'does not save duplicate louds', ->
+      loudCount = @sut.louds.length
+      @sut.remember 'LOUD TEXT'
+      expect(@sut.louds.length).to.equal(loudCount)
 
   describe 'constructor', ->
     it 'gets louds from brain', ->
