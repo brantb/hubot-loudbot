@@ -4,16 +4,6 @@ chai.use require 'sinon-chai'
 
 expect = chai.expect
 
-describe 'script', ->
-  beforeEach ->
-    @robot =
-      respond: sinon.spy()
-      hear: sinon.spy()
-    @sut = require('../src/hello-world')(@robot)
-
-    it 'remembers loud messages', ->
-      #expect(@robot.hear).to.have.been.calledWith(/.*/)
-
 describe 'Loudbot', ->
   beforeEach ->
     @brain = 
@@ -56,5 +46,4 @@ describe 'Loudbot', ->
 
     it 'has enough letters', ->
       expect(@sut.isLoud('??? HI ???')).to.be.false
-
 
