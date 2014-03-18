@@ -18,7 +18,7 @@ module.exports = function(grunt) {
     release: {
       options: {
         tagName: 'v<%= version %>',
-        commitMessage: 'Prepared to release <%= version %>.'
+        commitMessage: 'Released v<%= version %>.'
       }
     },
     watch: {
