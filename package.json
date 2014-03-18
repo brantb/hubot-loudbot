@@ -1,13 +1,13 @@
 {
   "name": "hubot-loudbot",
   "description": "A LOUDBOT SCRIPT FOR HUBOT",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Brant Bobby <brant@control-v.net>",
   "license": "MIT",
   "keywords": [
     "hubot",
-	"hubot-scripts",
-	"loudbot"
+    "hubot-scripts",
+    "loudbot"
   ],
   "repository": {
     "type": "git",
