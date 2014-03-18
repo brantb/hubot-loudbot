@@ -9,7 +9,9 @@ describe 'script', ->
     @robot =
       respond: sinon.spy()
       hear: sinon.spy()
-    @sut = require('../src/script')(@robot)
+      brain: 
+        get: sinon.spy()
+    require('../src/script')(@robot)
 
   it 'hears all', ->
     expect(@robot.hear).to.have.been.calledWith(/.*/)
