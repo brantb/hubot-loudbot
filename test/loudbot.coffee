@@ -7,10 +7,12 @@ Loudbot = require('../src/loudbot')
 
 describe 'Loudbot', ->
   beforeEach ->
+    # this is almost certainly the wrong way to mock thlngs
     @brain = 
       get: sinon.spy()
       set: sinon.spy()
       on: sinon.spy()
+      save: sinon.spy()
     @sut = new Loudbot(@brain)
 
   describe 'remember', ->
@@ -22,6 +24,7 @@ describe 'Loudbot', ->
 
     it 'saves in brain', ->
       expect(@brain.set).to.have.been.calledWith('LOUDS', @sut.louds)
+      expect(@brain.save).to.have.been.called
 
     it 'does not save duplicate louds', ->
       loudCount = @sut.louds.length
