@@ -9,7 +9,7 @@ class Loudbot
       if not loadedLouds.length
         console.log 'POPULATING LOUDS FROM INITIAL SEED'
         loadedLouds = @getSeed()
-      _.union(@louds, loadedLouds)
+      @louds = _.union(@louds, loadedLouds)
 
   getSeed: ->
     require('./seed').slice()
