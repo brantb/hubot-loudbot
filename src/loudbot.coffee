@@ -1,10 +1,19 @@
+_ = require 'lodash'
+
 class Loudbot
   constructor: (@brain) ->
-    @louds = @brain.get('LOUDS') or @getSeed()
+    @louds = []
+    @brain.on 'loaded', ->
+      loadedLouds = @brain.get('LOUDS') or []
+      console.log "LOADED #{loadedLouds.length} LOUDS FROM BRAIN"
+      if not loadedLouds.length
+        console.log 'POPULATING LOUDS FROM INITIAL SEED'
+        loadedLouds = @getSeed()
+      _.union(@louds, loadedLouds)
 
   getSeed: ->
     require('./seed').slice()
-    
+
   isUpperCase: (text) ->
     text == text.toUpperCase() and text != text.toLowerCase()
 

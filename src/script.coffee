@@ -14,7 +14,7 @@ Loudbot = require ('./loudbot')
 
 module.exports = (robot) ->
   loudbot = new Loudbot(robot.brain)
-  console.log "LOUDBOT INITIALIZED WITH #{loudbot.louds.length} LOUDS"
+  console.log "LOUDBOT INITIALIZED"
 
   robot.hear /.*/, (msg) ->
     text = msg.match[0]

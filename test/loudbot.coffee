@@ -10,6 +10,7 @@ describe 'Loudbot', ->
     @brain = 
       get: sinon.spy()
       set: sinon.spy()
+      on: sinon.spy()
     @sut = new Loudbot(@brain)
 
   describe 'remember', ->
@@ -28,12 +29,8 @@ describe 'Loudbot', ->
       expect(@sut.louds.length).to.equal(loudCount)
 
   describe 'constructor', ->
-    it 'gets louds from brain', ->
-      expect(@brain.get).to.have.been.calledWith('LOUDS')
-
-    it 'initializes louds with seed data', ->
-      expect(@sut.louds).not.to.be.empty
-      expect(@sut.louds.indexOf("SORRY")).to.be.positive
+    it 'initializes louds array', ->
+      expect(@sut.louds).to.be.array
 
   describe 'isLoud', -> 
     it 'has caps', ->

@@ -11,6 +11,7 @@ describe 'script', ->
       hear: sinon.spy()
       brain: 
         get: sinon.spy()
+        on: sinon.spy()
     require('../src/script')(@robot)
 
   it 'hears all', ->
