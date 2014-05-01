@@ -36,19 +36,24 @@ describe 'Loudbot', ->
       expect(@sut.louds).to.be.array
 
   describe 'isLoud', -> 
-    it 'has caps', ->
+    it 'is all caps', ->
       expect(@sut.isLoud('WHY IS EVERYONE YELLING')).to.be.true
-      expect(@sut.isLoud('i do not know')).to.be.false
+    
+    it 'has no lower case characters', ->
+      expect(@sut.isLoud('I do not know')).to.be.false
 
-    it 'allows punctuation', ->
-      expect(@sut.isLoud('PUNCTUATION TOO?!?.?;?')).to.be.true
+    it 'disallows punctuation', ->
+      expect(@sut.isLoud('AAAAAAAAAAA!')).to.be.false
 
     it 'is long enough', ->
-      expect(@sut.isLoud('LOL')).to.be.false
+      expect(@sut.isLoud('LOLOLO')).to.be.false
 
     it 'has a letter', ->
-      expect(@sut.isLoud('?????')).to.be.false
+      expect(@sut.isLoud('????????????')).to.be.false
 
     it 'has enough letters', ->
       expect(@sut.isLoud('??? HI ???')).to.be.false
+
+    it 'has no numbers', ->
+      expect(@sut.isLoud('ABCDEFG HIJKL MN123')).to.be.false
 

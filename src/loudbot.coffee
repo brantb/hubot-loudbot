@@ -1,5 +1,7 @@
 _ = require 'lodash'
 
+loudRegex = new RegExp(/^[A-Z\s]+$/)
+
 class Loudbot
   constructor: (@brain) ->
     @loaded = false
@@ -23,14 +25,8 @@ class Loudbot
   getSeed: ->
     require('./seed').slice()
 
-  isUpperCase: (text) ->
-    text == text.toUpperCase() and text != text.toLowerCase()
-
-  numLettersIn: (text) ->
-    text.match(/[A-Z]/g).length
-
   isLoud: (text) ->
-    @isUpperCase(text) && @numLettersIn(text) > 3
+    loudRegex.test(text) and text.length > 6
 
   remember: (text) ->
     if text not in @louds
