@@ -7,6 +7,9 @@
 # Configuration:
 #   NONE
 #
+# Commands:
+#   hubot forget loud <loud> - REMOVE LOUDBOT TEXT
+# 
 # Author:
 #   brantb
 
@@ -21,3 +24,6 @@ module.exports = (robot) ->
     if loudbot.isLoud text
       msg.send msg.random loudbot.louds
       loudbot.remember text
+  
+  robot.respond /forget loud (.*)/i, (msg) ->
+    loudbot.forget msg.match[0]

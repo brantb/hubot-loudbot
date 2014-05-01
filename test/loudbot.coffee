@@ -31,6 +31,27 @@ describe 'Loudbot', ->
       @sut.remember 'LOUD TEXT'
       expect(@sut.louds.length).to.equal(loudCount)
 
+  describe 'forget', ->
+    beforeEach ->
+      @sut.remember 'LOUD TEXT'
+
+    it 'removes text from louds array', ->
+      @sut.forget 'LOUD TEXT'
+      expect('LOUD TEXT' in @sut.louds).to.be.false
+
+    it 'saves louds in brain', ->
+      @sut.forget 'LOUD TEXT'
+      expect(@brain.set).to.have.been.calledTwice
+      expect(@brain.set).to.have.always.calledWith('LOUDS', @sut.louds)
+
+    it 'returns true if the loud was removed', ->
+      result = @sut.forget 'LOUD TEXT'
+      expect(result).to.be.true
+
+    it 'returns false if no loud was removed', ->
+      result = @sut.forget 'DOES NOT EXIST'
+      expect(result).to.be.false
+
   describe 'constructor', ->
     it 'initializes louds array', ->
       expect(@sut.louds).to.be.array
@@ -49,7 +70,7 @@ describe 'Loudbot', ->
       expect(@sut.isLoud('LOLOLO')).to.be.false
 
     it 'has a letter', ->
-      expect(@sut.isLoud('????????????')).to.be.false
+      expect(@sut.isLoud('???? ????????')).to.be.false
 
     it 'has enough letters', ->
       expect(@sut.isLoud('??? HI ???')).to.be.false

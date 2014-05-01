@@ -17,3 +17,5 @@ describe 'script', ->
   it 'hears all', ->
     expect(@robot.hear).to.have.been.calledWith(/.*/)
 
+  it 'can forget louds', ->
+    expect(@robot.respond).to.have.been.calledWith(/forget loud (.*)/i)

@@ -34,6 +34,14 @@ class Loudbot
       @louds.push text
       @saveLouds()
 
+  forget: (text) ->
+    exists = text in @louds
+    if text in @louds
+      console.log "FORGETTING LOUD: #{text}"
+      _.pull(@louds, text)
+      @saveLouds()
+    exists
+
   saveLouds: ->
     @brain.set 'LOUDS', @louds
     @brain.save()
