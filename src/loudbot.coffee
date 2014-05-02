@@ -6,7 +6,10 @@ class Loudbot
   constructor: (@brain) ->
     @loaded = false
     @louds = []
-    @brain.on 'loaded', =>
+    @brain.on 'loaded', ->
+      @loadFromBrain()
+
+   loadFromBrain: ->
       if not @loaded
         @loaded = true
 

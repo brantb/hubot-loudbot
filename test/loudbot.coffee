@@ -5,15 +5,31 @@ chai.use require 'sinon-chai'
 expect = chai.expect
 Loudbot = require('../src/loudbot')
 
+getBrain = ->
+  # this is almost certainly the wrong way to mock thlngs
+  brain = {
+    get: sinon.stub()
+    set: sinon.stub()
+    on: sinon.stub()
+    save: sinon.stub()
+  }
+
+getLoudbot = ->
+  new Loudbot(getBrain())
+
+# These should be chai extensions but I'll be damned if I know how
+# to make that happen
+expectLoud = (text) ->
+  bot = getLoudbot()
+  expect(bot.isLoud(text)).to.be.true
+
+expectNotLoud = (text) ->
+  bot = getLoudbot()
+  expect(bot.isLoud(text)).to.be.false
+
 describe 'Loudbot', ->
   beforeEach ->
-    # this is almost certainly the wrong way to mock thlngs
-    @brain = 
-      get: sinon.spy()
-      set: sinon.spy()
-      on: sinon.spy()
-      save: sinon.spy()
-    @sut = new Loudbot(@brain)
+    @sut = getLoudbot()
 
   describe 'remember', ->
     beforeEach ->
@@ -23,8 +39,8 @@ describe 'Loudbot', ->
       expect('LOUD TEXT' in @sut.louds).to.be.true
 
     it 'saves in brain', ->
-      expect(@brain.set).to.have.been.calledWith('LOUDS', @sut.louds)
-      expect(@brain.save).to.have.been.called
+      expect(@sut.brain.set).to.have.been.calledWith('LOUDS', @sut.louds)
+      expect(@sut.brain.save).to.have.been.called
 
     it 'does not save duplicate louds', ->
       loudCount = @sut.louds.length
@@ -41,8 +57,8 @@ describe 'Loudbot', ->
 
     it 'saves louds in brain', ->
       @sut.forget 'LOUD TEXT'
-      expect(@brain.set).to.have.been.calledTwice
-      expect(@brain.set).to.have.always.calledWith('LOUDS', @sut.louds)
+      expect(@sut.brain.set).to.have.been.calledTwice
+      expect(@sut.brain.set).to.have.always.calledWith('LOUDS', @sut.louds)
 
     it 'returns true if the loud was removed', ->
       result = @sut.forget 'LOUD TEXT'
@@ -56,25 +72,37 @@ describe 'Loudbot', ->
     it 'initializes louds array', ->
       expect(@sut.louds).to.be.array
 
+  describe 'loadFromBrain', ->
+    beforeEach ->
+      mockLouds = ['EXPECTED LOUD', 'NOT EXPECTED LOUD 1']
+      @sut.brain.get.returns mockLouds
+      @sut.loadFromBrain()
+
+    it 'loads louds from brain', ->
+      expect(@sut.brain.get).to.have.been.calledWith 'LOUDS'
+
   describe 'isLoud', -> 
     it 'is all caps', ->
-      expect(@sut.isLoud('WHY IS EVERYONE YELLING')).to.be.true
+      expectLoud 'WHY IS EVERYONE YELLING'
     
     it 'has no lower case characters', ->
-      expect(@sut.isLoud('I do not know')).to.be.false
+      expectNotLoud 'I do not know'
 
     it 'disallows punctuation', ->
-      expect(@sut.isLoud('AAAAAAAAAAA!')).to.be.false
+      expectNotLoud 'AAAAAAAAAAA!'
 
     it 'is long enough', ->
-      expect(@sut.isLoud('LOLOLO')).to.be.false
+      expectNotLoud 'LOLOLO'
+
+    it 'is long enough when puncutation and numbers are removed', ->
+      expectNotLoud 'LOLOLO123"%$!!!!!!'
 
     it 'has a letter', ->
-      expect(@sut.isLoud('???? ????????')).to.be.false
+      expectNotLoud '???? ????????'
 
     it 'has enough letters', ->
-      expect(@sut.isLoud('??? HI ???')).to.be.false
+      expectNotLoud '??? HI ???'
 
     it 'has no numbers', ->
-      expect(@sut.isLoud('ABCDEFG HIJKL MN123')).to.be.false
+      expectNotLoud 'ABCDEFG HIJKL MN123'
 
