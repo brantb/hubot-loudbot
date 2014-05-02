@@ -20,7 +20,10 @@ class Loudbot
           console.log 'POPULATING LOUDS FROM INITIAL SEED'
           loadedLouds = @getSeed()
         
-        @louds = _.union(@louds, loadedLouds)
+        @louds = _(@louds)
+          .union(loadedLouds)
+          .filter((text) => @isLoud text)
+          .value()
         @saveLouds()
 
   getSeed: ->

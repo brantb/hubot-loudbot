@@ -1,6 +1,7 @@
 chai = require 'chai'
 sinon = require 'sinon'
 chai.use require 'sinon-chai'
+chai.use require 'chai-things'
 
 expect = chai.expect
 Loudbot = require('../src/loudbot')
@@ -73,16 +74,24 @@ describe 'Loudbot', ->
       expect(@sut.louds).to.be.array
 
   describe 'loadFromBrain', ->
-    beforeEach ->
-      mockLouds = ['EXPECTED LOUD', 'NOT EXPECTED LOUD 1']
-      @sut.brain.get.returns mockLouds
-      @sut.loadFromBrain()
+    describe 'when there are louds in the brain', ->
+      beforeEach ->
+        mockLouds = ['EXPECTED LOUD', 'not expected']
+        @sut.brain.get.returns mockLouds
+        @sut.loadFromBrain()
 
-    it 'loads louds from brain', ->
-      expect(@sut.brain.get).to.have.been.calledWith 'LOUDS'
+      it 'loads louds from brain', ->
+        expect(@sut.brain.get).to.have.been.calledWith 'LOUDS'
 
-    it 'does not load text that isn\'t loud enough', ->
-      expect(@sut.louds).to.not.include 'not expected'
+      it 'does not load text that isn\'t loud enough', ->
+        expect(@sut.louds).to.not.include 'not expected'
+
+    describe 'when there are no louds in the brain', ->
+      beforeEach ->
+        @sut.loadFromBrain()
+
+      it 'uses the seed data', ->
+        expect(@sut.louds).to.include 'SO\'S YOUR FACE'
 
   describe 'isLoud', -> 
     it 'is all caps', ->
