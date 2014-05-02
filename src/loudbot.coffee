@@ -1,7 +1,5 @@
 _ = require 'lodash'
 
-loudRegex = new RegExp(/^[A-Z\s]+$/)
-
 class Loudbot
   constructor: (@brain) ->
     @loaded = false
@@ -28,8 +26,23 @@ class Loudbot
   getSeed: ->
     require('./seed').slice()
 
+  isUpperCase: (text) ->
+    text == text.toUpperCase() and text != text.toLowerCase()
+
+  numLettersIn: (text) ->
+    text.match(/[A-Z]/g).length
+
+  numberRatio: (text) ->
+    letters = numLettersIn(text)
+    @numLettersIn(text).length
+
+  # no lower-case chars and at least 90% letters (not counting spaces)
   isLoud: (text) ->
-    loudRegex.test(text) and text.length > 6
+    isUpperCase = text == text.toUpperCase() and text != text.toLowerCase()
+    numLetters = text.match(/[A-Z ]/g, "").length
+    ratio = numLetters / text.length
+    #console.log "isUpperCase: #{isUpperCase}  letters: #{numLetters}  ratio: #{ratio}"
+    isUpperCase and numLetters >= 8 and ratio > 0.9
 
   remember: (text) ->
     if text not in @louds

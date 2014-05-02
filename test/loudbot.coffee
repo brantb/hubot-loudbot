@@ -81,6 +81,9 @@ describe 'Loudbot', ->
     it 'loads louds from brain', ->
       expect(@sut.brain.get).to.have.been.calledWith 'LOUDS'
 
+    it 'does not load text that isn\'t loud enough', ->
+      expect(@sut.louds).to.not.include 'not expected'
+
   describe 'isLoud', -> 
     it 'is all caps', ->
       expectLoud 'WHY IS EVERYONE YELLING'
@@ -88,21 +91,22 @@ describe 'Loudbot', ->
     it 'has no lower case characters', ->
       expectNotLoud 'I do not know'
 
-    it 'disallows punctuation', ->
-      expectNotLoud 'AAAAAAAAAAA!'
+    it 'allows punctuation', ->
+      expectLoud 'AAAAAAAAAAA!'
 
     it 'is long enough', ->
       expectNotLoud 'LOLOLO'
+      expectLoud 'NEGATIVE'
 
-    it 'is long enough when puncutation and numbers are removed', ->
+    it 'is long enough when non-letters are removed', ->
       expectNotLoud 'LOLOLO123"%$!!!!!!'
+      expectNotLoud 'WTB C# 5'
+      expectLoud 'SHUT UP I\'M NOT OLD'
+      expectLoud 'BLAME CANADA!'
 
-    it 'has a letter', ->
-      expectNotLoud '???? ????????'
-
-    it 'has enough letters', ->
+    it 'is mostly letters', ->
+      expectLoud '3 OUT OF 5 DENTISTS AGREE: BRUSH YOUR TEETH'
+      expectNotLoud 'ABCDEFG 123'
+      expectNotLoud '7DB3AFA6'
       expectNotLoud '??? HI ???'
-
-    it 'has no numbers', ->
-      expectNotLoud 'ABCDEFG HIJKL MN123'
 
