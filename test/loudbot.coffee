@@ -54,7 +54,7 @@ describe 'Loudbot', ->
 
     it 'removes text from louds array', ->
       @sut.forget 'LOUD TEXT'
-      expect('LOUD TEXT' in @sut.louds).to.be.false
+      expect(@sut.louds).to.not.include 'LOUD TEXT'
 
     it 'saves louds in brain', ->
       @sut.forget 'LOUD TEXT'
