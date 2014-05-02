@@ -82,9 +82,11 @@ describe 'Loudbot', ->
 
       it 'loads louds from brain', ->
         expect(@sut.brain.get).to.have.been.calledWith 'LOUDS'
+        expect(@sut.louds).to.include 'EXPECTED LOUD'
 
       it 'does not load text that isn\'t loud enough', ->
         expect(@sut.louds).to.not.include 'not expected'
+        expect(@sut.louds.length).to.equal 1
 
     describe 'when there are no louds in the brain', ->
       beforeEach ->
