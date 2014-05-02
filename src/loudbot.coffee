@@ -44,7 +44,6 @@ class Loudbot
     isUpperCase = text == text.toUpperCase() and text != text.toLowerCase()
     numLetters = text.match(/[A-Z ]/g, "").length
     ratio = numLetters / text.length
-    console.log "isUpperCase: #{isUpperCase}  letters: #{numLetters}  ratio: #{ratio}"
     isUpperCase and numLetters >= 8 and ratio > 0.9
 
   remember: (text) ->
