@@ -103,11 +103,11 @@ describe 'Loudbot', ->
       expectNotLoud 'I do not know'
 
     it 'allows punctuation', ->
-      expectLoud 'AAAAAAAAAAA!'
+      expectLoud 'AAA AAAAAAAAAAA!'
 
     it 'is long enough', ->
       expectNotLoud 'LOLOLO'
-      expectLoud 'NEGATIVE'
+      expectLoud 'LONG CAT IS LONG'
 
     it 'is long enough when non-letters are removed', ->
       expectNotLoud 'LOLOLO123"%$!!!!!!'
@@ -120,4 +120,10 @@ describe 'Loudbot', ->
       expectNotLoud 'ABCDEFG 123'
       expectNotLoud '7DB3AFA6'
       expectNotLoud '??? HI ???'
+
+    it 'is at least two words', ->
+      expectLoud 'AAAAAAAAAA HHHHHHHH'
+      expectNotLoud 'AAAAAAAAAAAAAHHHHHHHH'
+      expectNotLoud ' AAAAAAAAAAAAAHHHHHHHH'
+
 
