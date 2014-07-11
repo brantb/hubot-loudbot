@@ -108,6 +108,7 @@ describe 'Loudbot', ->
     it 'is long enough', ->
       expectNotLoud 'LOLOLO'
       expectLoud 'LONG CAT IS LONG'
+      expectNotLoud 'LOL  OLO'
 
     it 'is long enough when non-letters are removed', ->
       expectNotLoud 'LOLOLO123"%$!!!!!!'
@@ -123,7 +124,18 @@ describe 'Loudbot', ->
 
     it 'is at least two words', ->
       expectLoud 'AAAAAAAAAA HHHHHHHH'
+      expectLoud '    AAAAAAAAAAA       BBBBBBBBBBB   '
       expectNotLoud 'AAAAAAAAAAAAAHHHHHHHH'
       expectNotLoud ' AAAAAAAAAAAAAHHHHHHHH'
+      expectNotLoud '       '
+      expectNotLoud '    AAAAAAAAAAAAA     '
+      expectNotLoud 'A!BBBBBBBBBBBBBBBBBBBB'
 
+    it 'accepts uppercase accented characters as loud', ->
+      expectLoud 'ÁÀÂÅÃÄ ÉÈÊË'
+      expectNotLoud 'éééééééééé EEEEEEEE'
 
+    it 'considers tabs and newlines as whitespace', ->
+      expectLoud 'TAAAAAAAAAAAAAA BBBBBBBBBBBBBBB'
+      expectLoud 'NEWWWWWWWWWWWWWWWWWW
+                  LIIIIIIIIIIIIIIINE'
