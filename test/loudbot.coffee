@@ -126,4 +126,7 @@ describe 'Loudbot', ->
       expectNotLoud 'AAAAAAAAAAAAAHHHHHHHH'
       expectNotLoud ' AAAAAAAAAAAAAHHHHHHHH'
 
+    it 'accepts uppercase accented characters as loud', ->
+      expectLoud 'ÁÀÂÅÃÄ ÉÈÊË'
+      expectNotLoud 'éééééééééé EEEEEEEE'
 
