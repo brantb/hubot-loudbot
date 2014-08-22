@@ -47,7 +47,7 @@ class Loudbot
     text = text.trim()
     words = text.split(' ').length
     isUpperCase = text == text.toUpperCase() and text != text.toLowerCase()
-    numLetters = text.match(/[A-Z ]/g, "").length
+    numLetters = text.match(/[A-Z ]/g, "")?.length || 0
     ratio = numLetters / text.length
     isUpperCase and numLetters >= 8 and ratio > 0.9 and words > 1
 
