@@ -1,4 +1,5 @@
 _ = require 'lodash'
+removeAccents = require('./diacritics').removeDiacritics
 
 class Loudbot
   constructor: (@brain) ->
@@ -45,6 +46,7 @@ class Loudbot
   #  * two words
   isLoud: (text) ->
     text = text.trim()
+    text = removeAccents(text)
     words = text.split(' ').length
     isUpperCase = text == text.toUpperCase() and text != text.toLowerCase()
     numLetters = text.match(/[A-Z ]/g, "")?.length || 0
