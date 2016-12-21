@@ -96,6 +96,9 @@ describe 'Loudbot', ->
         expect(@sut.louds).to.include 'SO\'S YOUR FACE'
 
   describe 'isLoud', -> 
+    it 'is not an empty string', ->
+      expectNotLoud ''
+
     it 'is all caps', ->
       expectLoud 'WHY IS EVERYONE YELLING'
     
@@ -115,6 +118,10 @@ describe 'Loudbot', ->
       expectLoud 'SHUT UP I\'M NOT OLD'
       expectLoud 'BLAME CANADA!'
 
+    it 'is long enough when whitespace is removed', ->
+      expectNotLoud 'HI        LO'
+      expectNotLoud '          '
+
     it 'is mostly letters', ->
       expectLoud '3 OUT OF 5 DENTISTS AGREE: BRUSH YOUR TEETH'
       expectNotLoud 'ABCDEFG 123'
@@ -125,7 +132,13 @@ describe 'Loudbot', ->
       expectLoud 'AAAAAAAAAA HHHHHHHH'
       expectNotLoud 'AAAAAAAAAAAAAHHHHHHHH'
       expectNotLoud ' AAAAAAAAAAAAAHHHHHHHH'
+      expectNotLoud '  A  '
+      expectLoud 'UPHIGH\nDOWNLOW'
+      expectLoud 'LEFT\tRIGHT'
 
     it 'accepts uppercase accented characters as loud', ->
       expectLoud 'ÁÀÂÅÃÄ ÉÈÊË'
       expectNotLoud 'éééééééééé EEEEEEEE'
+
+    it 'accepts cake and other emoji as part of loud messages', ->
+      expectLoud 'I THINK I SHOULD BE ABLE TO SHOUT WITH 🍰'
