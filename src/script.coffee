@@ -29,4 +29,4 @@ module.exports = (robot) ->
       loudbot.remember text
   
   robot.respond /forget loud (.*)/i, (msg) ->
-    loudbot.forget msg.match[0]
+    loudbot.forget msg.match[1]
