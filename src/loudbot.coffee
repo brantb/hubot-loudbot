@@ -42,16 +42,17 @@ class Loudbot
 
   # louds must be:
   #  * uppercase (duh)
-  #  * 90% letters (not counting whitespace)
-  #  * two words
+  #  * eight or more letters
+  #  * at least 90% letters (not counting whitespace)
+  #  * two or more words
   isLoud: (text) ->
     text = text.trim()
     text = removeAccents(text)
-    words = text.split(' ').length
     isUpperCase = text == text.toUpperCase() and text != text.toLowerCase()
-    numLetters = text.match(/[A-Z ]/g, "")?.length || 0
-    ratio = numLetters / text.length
-    isUpperCase and numLetters >= 8 and ratio > 0.9 and words > 1
+    numLetters = text.match(/[A-Z]/g)?.length || 0
+    ratio = numLetters / text.replace(/\s+/g,'').length
+    numWords = text.split(/\s+/).length
+    isUpperCase and numLetters >= 8 and ratio >= 0.9 and numWords >= 2
 
   remember: (text) ->
     if text not in @louds
