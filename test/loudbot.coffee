@@ -71,7 +71,7 @@ describe 'Loudbot', ->
 
   describe 'constructor', ->
     it 'initializes louds array', ->
-      expect(@sut.louds).to.be.array
+      expect(@sut.louds).to.be.an('array')
 
   describe 'loadFromBrain', ->
     describe 'when there are louds in the brain', ->
