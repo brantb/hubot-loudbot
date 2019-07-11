@@ -1,7 +1,7 @@
 {
   "name": "hubot-loudbot",
   "description": "A LOUDBOT SCRIPT FOR HUBOT",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "author": "Brant Bobby <brant@control-v.net>",
   "license": "MIT",
   "keywords": [
@@ -29,10 +29,10 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-mocha-test": "^0.13.2",
     "grunt-release": "^0.14.0",
-    "matchdep": "~0.1.2",
+    "matchdep": "^2.0.0",
     "mocha": "*",
-    "sinon-chai": "*",
-    "sinon": "*"
+    "sinon": "*",
+    "sinon-chai": "*"
   },
   "main": "index.coffee",
   "scripts": {
