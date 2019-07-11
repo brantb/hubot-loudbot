@@ -27,4 +27,8 @@ module.exports = (robot) ->
       loudbot.remember text
 
   robot.respond /forget loud (.*)/i, (msg) ->
-    loudbot.forget msg.match[1]
+    forgotten = loudbot.forget msg.match[1]
+    if forgotten
+      msg.send "OK"
+    else
+      msg.send "I'VE NEVER HEARD THAT"
