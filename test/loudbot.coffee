@@ -16,7 +16,10 @@ getBrain = ->
   }
 
 getLoudbot = ->
-  new Loudbot(getBrain())
+  opts = {
+    profanity_filter: true
+  }
+  new Loudbot(getBrain(), opts)
 
 # These should be chai extensions but I'll be damned if I know how
 # to make that happen
@@ -142,3 +145,30 @@ describe 'Loudbot', ->
 
     it 'accepts cake and other emoji as part of loud messages', ->
       expectLoud 'I THINK I SHOULD BE ABLE TO SHOUT WITH 🍰'
+
+  describe 'randomLoud', ->
+    beforeEach ->
+      @sut.remember 'ONE'
+      @sut.remember 'TWO'
+
+    it 'returns a random loud', ->
+      expect(@sut.randomLoud()).to.be.oneOf(['ONE', 'TWO'])
+
+describe 'LoudBot options', ->
+  beforeEach ->
+    @sut = new Loudbot(getBrain())
+
+  describe 'profanity options', ->
+    beforeEach ->
+      @sut.censor = sinon.stub()
+      @sut.remember 'WORD'
+
+    it 'is disabled by default', ->
+      @sut.randomLoud()
+      expect(@sut.censor).not.to.have.been.called
+
+    it 'can be enabled', ->
+      @sut.options.profanity_filter = true
+      @sut.randomLoud()
+      expect(@sut.censor).to.have.been.calledWith('WORD')
+    

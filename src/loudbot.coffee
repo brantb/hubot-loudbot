@@ -1,8 +1,9 @@
 _ = require 'lodash'
 removeAccents = require('./diacritics').removeDiacritics
+purify = require('./profanity').purify
 
 class Loudbot
-  constructor: (@brain) ->
+  constructor: (@brain, @options = {}) ->
     @loaded = false
     @louds = []
     @brain.on 'loaded', =>
@@ -39,6 +40,16 @@ class Loudbot
   numberRatio: (text) ->
     letters = numLettersIn(text)
     @numLettersIn(text).length
+
+  randomLoud: ->
+    loud = @louds[Math.floor(Math.random() * @louds.length)]
+    if @options.profanity_filter
+      @censor(loud)
+    else
+      loud
+
+  censor: (text) ->
+    purify text
 
   # louds must be:
   #  * uppercase (duh)
