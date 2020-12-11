@@ -54,6 +54,7 @@ class Loudbot
   # louds must be:
   #  * uppercase (duh)
   #  * eight or more letters
+  #  * no more than 280 letters
   #  * at least 90% letters (not counting whitespace)
   #  * two or more words
   isLoud: (text) ->
@@ -63,7 +64,7 @@ class Loudbot
     numLetters = text.match(/[A-Z]/g)?.length || 0
     ratio = numLetters / text.replace(/\s+/g,'').length
     numWords = text.split(/\s+/).length
-    isUpperCase and numLetters >= 8 and ratio >= 0.9 and numWords >= 2
+    isUpperCase and numLetters >= 8 and numLetters <= 280 and ratio >= 0.9 and numWords >= 2
 
   remember: (text) ->
     if text not in @louds
